@@ -1,0 +1,148 @@
+@mixin font($fw, $fz) {
+    font: {
+        weight: $fw;
+        size: $fz;
+    }
+}
+
+.sidebar {
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    max-width: 230px;
+    width: 100%;
+    height: 100%;
+    animation-name: load;
+    animation-duration: 1s;
+    transition-duration: 1s;
+    &.active{
+        transform: translateX(0);
+    }
+    @media (max-width: 725px){
+        transform: translateX(calc(-100% + 50px));
+        animation-duration: 0s;
+        max-width: 280px;
+        padding-right: 50px;
+    }
+    .overlayMobile{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        z-index: 9;
+        animation: overlayAppearance .5s;
+    }
+    .mobileSidebarBtn{
+        display: none;
+        @media (max-width: 725px){
+            display: block;
+        }
+        button{
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 35px;
+            height:35px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            border: 0;
+            outline: none;
+            background-color: transparent;
+            overflow: hidden;
+            &.active{
+                span{
+                    &:first-child{
+                        transform: rotate(45deg);
+                    }
+                    &:last-child{
+                        transform: rotate(-45deg);
+                    }
+                    &:nth-child(2) {
+                        transform: translateX(100%);
+                    }
+                }
+            }
+        }
+        span{
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #fff;
+            transition-duration: .5s;
+            &:first-child{
+                transform: translateY(-7px);
+            }
+            &:last-child{
+                transform: translateY(7px);
+            }
+        }
+    }
+    .exit{
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        @media (max-width: 725px) {
+            padding-right: 50px;
+        }
+        button{
+            cursor: pointer;
+            background-color: transparent;
+            border: 0;
+            outline: none;
+            font-weight: 500;
+            font-size: 18px;
+            color: #fff;
+            position: relative;
+            padding-left: 30px;
+            display: flex;
+            align-items: center;
+            img{
+                position: absolute;
+                left: 0;
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
+
+@media (max-width: 725px) {
+    .overlay{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        z-index: 9;
+        animation: overlayAppearance .5s;
+    } 
+}
+
+@keyframes load {
+    0%{
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes overlayAppearance {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

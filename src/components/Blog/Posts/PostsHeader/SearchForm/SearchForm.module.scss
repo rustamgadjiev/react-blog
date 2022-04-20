@@ -1,0 +1,31 @@
+.search{
+    background-color: transparent;
+    outline: none;
+    border: 0;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    padding: 5px 7px;
+    font-size: 14px;
+    padding-right: 25px;
+    &::placeholder{
+        color: rgb(228, 228, 228);
+    }
+    @media (max-width: 425px){
+        width: 150px;
+    }
+    @media (max-width: 375px){
+        width: 120px;
+    }
+}
+.searchFrom{
+    position: relative;
+    svg{
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        fill: #fff;
+    }
+}
