@@ -36,23 +36,25 @@ export const Posts = ({ blogPosts, setBlogPosts, isLoading, title, error }) => {
 
   return (
     <div className={s.posts}>
-      <PostsHeader
-        title={title}
-        blogPosts={blogPosts}
-        setBlogPosts={setBlogPosts}
-      />
-      <div className={s.content}>
-        {blogPosts.map((post, pos) => {
-          return (
-            <Post
-              key={post.id}
-              {...post}
-              likePost={() => likePost(post)}
-              deletePost={() => deletePost(post.id)}
-              selectPost={() => selectPost(pos)}
-            />
-          );
-        })}
+      <div className="container">
+        <PostsHeader
+          title={title}
+          blogPosts={blogPosts}
+          setBlogPosts={setBlogPosts}
+        />
+        <div className={s.content}>
+          {blogPosts.map((post, pos) => {
+            return (
+              <Post
+                key={post.id}
+                {...post}
+                likePost={() => likePost(post)}
+                deletePost={() => deletePost(post.id)}
+                selectPost={() => selectPost(pos)}
+              />
+            );
+          })}
+        </div>
       </div>
 
       {showEditForm && (

@@ -28,7 +28,10 @@ export const Post = ({
             <Link to={`/blog/${id}`}>Подробнее</Link>
           </>
         ) : (
-          description
+          <>
+            {description}
+            <Link to={`/blog/${id}`}>Подробнее</Link>
+          </>
         )}
       </div>
       <div className={s.actions}>

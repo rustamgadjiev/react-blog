@@ -7,6 +7,7 @@
     width: 220px;
     animation-name: appearance;
     animation-duration: 1.5s;
+    position: relative;
     @media (max-width: 725px){
         width: 100%;
     }
@@ -27,7 +28,7 @@
         line-height: 40px;
         color: #fff;
     }
-    .text{
+    .text {
         color: rgb(175, 175, 175);
         width: 200px;
         flex: 1 1 auto;
@@ -36,6 +37,12 @@
         }
         a{
             color: #fff;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            padding: 7px 10px;
+            background-color: rgb(56, 56, 56);
+            border-radius: 5px;
         }
     }
     .actions{
