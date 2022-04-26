@@ -2,6 +2,17 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    &::-webkit-scrollbar{
+        background-color: transparent;
+        width: 7px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: #333;
+        border-radius: 10px;
+        &:hover{
+            background-color: #555;
+        }
+    }
 }
 a{
     text-decoration: none;
@@ -11,20 +22,8 @@ ul,
 li{
     display: inline-block;
 }
-body{
-    &::-webkit-scrollbar{
-        background-color: transparent;
-        width: 10px;
-    }
-    &::-webkit-scrollbar-thumb{
-        background-color: #333;
-        border-radius: 10px;
-        &:hover{
-            background-color: #111;
-        }
-    }
-}
 
 .container{
     max-width: 1280px;
+    padding: 0px 5px;
 }

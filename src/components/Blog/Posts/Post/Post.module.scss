@@ -32,6 +32,8 @@
         color: rgb(175, 175, 175);
         width: 200px;
         flex: 1 1 auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
         @media (max-width: 725px){
             width: 100%;
         }

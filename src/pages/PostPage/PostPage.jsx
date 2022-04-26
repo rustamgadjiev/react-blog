@@ -7,6 +7,7 @@ import { ReactComponent as DeleteIcon } from "../../assets/images/icons/delete.s
 import { ReactComponent as EditIcon } from "../../assets/images/icons/edit.svg";
 import { ReactComponent as LoadingIcon } from "../../assets/images/icons/loading.svg";
 import { useGetSinglePost } from "../../utils/hooks";
+import { Link } from "react-router-dom";
 
 export const PostPage = () => {
   const { postId } = useParams();
