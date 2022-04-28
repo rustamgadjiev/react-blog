@@ -1,21 +1,25 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { POSTS_URL } from "../../utils/constants";
 import s from "./PostPage.module.scss";
+import { ReactComponent as LoadingIcon } from "../../assets/images/icons/loading.svg";
 import { ReactComponent as LikeIcon } from "../../assets/images/icons/like.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/images/icons/delete.svg";
 import { ReactComponent as EditIcon } from "../../assets/images/icons/edit.svg";
-import { ReactComponent as LoadingIcon } from "../../assets/images/icons/loading.svg";
-import { useGetSinglePost } from "../../utils/hooks";
-import { Link } from "react-router-dom";
+import { useDeleteSinglePost, useEditSinglePost, useGetSinglePost, useLikeSinglePost, useSelectSinglePost } from "../../utils/hooks";
+import { EditForm } from "../../components/Blog/Posts/Post/EditPost/EditForm";
 
-export const PostPage = () => {
+export const PostPage = ({ blogPosts, setBlogPosts }) => {
   const { postId } = useParams();
 
   const { blogPost, setBlogPost, isLoading, error } = useGetSinglePost(
     POSTS_URL,
     postId
   );
+
+  const likePost = useLikeSinglePost(POSTS_URL, setBlogPost);
+  const deletePost = useDeleteSinglePost(POSTS_URL, setBlogPost);
+  const { selectPost, selectedPost, showEditForm, setShowEditForm } = useSelectSinglePost(blogPost);
+  // const editPost = useEditSinglePost(POSTS_URL, blogPost, blogPost.title, blogPost.description, setBlogPost, selectedPost);
 
   const { title, description, img } = blogPost;
 
@@ -43,14 +47,14 @@ export const PostPage = () => {
       </div>
       <div className={s.title}>{title}</div>
       <div className={s.text}>{description}</div>
-      {/* <div className={s.actions}>
+      <div className={s.actions}>
         <div className={s.like}>
-          <button onClick={likePost} className={s.likeBtn}>
-            <LikeIcon fill={liked ? "red" : "white"} />
+          <button onClick={() => likePost(blogPost)} className={s.likeBtn}>
+            <LikeIcon fill={blogPost.liked ? "red" : "white"} />
           </button>
         </div>
         <div className={s.delete}>
-          <button onClick={deletePost} className={s.deleteBtn}>
+          <button onClick={() => deletePost(blogPost.id)} className={s.deleteBtn}>
             <DeleteIcon />
           </button>
         </div>
@@ -59,7 +63,16 @@ export const PostPage = () => {
             <EditIcon />
           </button>
         </div>
-      </div> */}
+      </div>
+
+      {showEditForm && (
+        <EditForm
+          selectedPost={selectedPost}
+          setShowEditForm={setShowEditForm}
+          blogPosts={blogPosts}
+          setBlogPosts={setBlogPosts}
+        />
+      )}
     </div>
   );
 };

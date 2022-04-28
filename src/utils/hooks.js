@@ -156,3 +156,102 @@ export const useGetSinglePost = (url, postId) => {
 
   return { blogPost, setBlogPost, isLoading, error };
 };
+
+export const useLikeSinglePost = (url, setBlogPost) => {
+  const likePost = async (post) => {
+    const updatedPost = { ...post, liked: !post.liked };
+
+    try {
+      const response = await fetch(url + post.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedPost),
+      });
+
+      if (response.ok) {
+        const updatedPostFromServer = await response.json();
+
+        setBlogPost(updatedPostFromServer);
+      } else throw new Error(response.statusText);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return likePost;
+};
+
+export const useDeleteSinglePost = (url, setBlogPost) => {
+  const deletePost = async (postId) => {
+    const isDelete = window.confirm("Вы хотите удалить пост?");
+
+    if (isDelete) {
+      try {
+        const response = await fetch(url + postId, { method: "DELETE" });
+
+        if (response.ok) {
+          window.location = '/blog';
+        } else throw new Error(response.statusText);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  return deletePost;
+};
+
+export const useEditSinglePost = (
+  url,
+  selectedPost,
+  postTitle,
+  postDesc,
+  setBlogPost,
+  setShowEditForm
+) => {
+  const editPost = async (e) => {
+    e.preventDefault();
+
+    const updatedPost = {
+      ...selectedPost,
+      title: postTitle,
+      description: postDesc,
+    };
+
+    try {
+      const response = await fetch(url + selectedPost.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedPost),
+      });
+
+      if (response.ok) {
+        const updatedPostFromServer = await response.json();
+
+        setBlogPost(updatedPostFromServer);
+      } else throw new Error(response.statusText);
+    } catch (error) {
+      console.log(error);
+    }
+
+    setShowEditForm(false);
+  };
+
+  return editPost;
+};
+
+export const useSelectSinglePost = (blogPost) => {
+  const [selectedPost, setSelectedPost] = useState({});
+  const [showEditForm, setShowEditForm] = useState(false);
+
+  const selectPost = (pos) => {
+    setSelectedPost(blogPost);
+    setShowEditForm(true);
+  };
+
+  return { selectPost, selectedPost, showEditForm, setShowEditForm };
+};

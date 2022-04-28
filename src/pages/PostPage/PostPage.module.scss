@@ -10,8 +10,42 @@
     }
 
     .text {
-        width: 400px;
+        max-width: 400px;
         color: #afafaf;
+        margin-bottom: 10px;
+    }
+
+    .actions{
+        display: flex;
+        gap: 5px;
+    }
+
+    .like,
+    .delete,
+    .edit{
+        svg{
+            width: 35px;
+            transition-duration: .3s;
+            @media (max-width: 725px){
+                width: 30px;
+            }
+        }
+        button{
+            background-color: transparent;
+            border: 0;
+            outline: none;
+            transition-duration: .1s;
+            cursor: pointer;
+            &:active{
+                transform: scale(1.1);
+            }
+        }
+    }
+    .delete,
+    .edit{
+        svg{
+            fill: #fff;
+        }
     }
 
     .img img {
