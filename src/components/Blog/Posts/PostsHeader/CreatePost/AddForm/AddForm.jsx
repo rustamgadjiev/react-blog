@@ -1,43 +1,22 @@
 import { useEffect, useState } from "react";
 import s from "./AddForm.module.scss";
 import { ReactComponent as CloseFormIcon } from "../../../../../../assets/images/icons/closeForm.svg";
-import { POSTS_URL } from "../../../../../../utils/constants";
+import { useDispatch } from "react-redux";
+import { createPost } from "../../../../../../store/slices/posts";
 
-export const AddForm = ({ setShowForm, blogPosts, setBlogPosts }) => {
+export const AddForm = ({ setShowForm }) => {
   const [postTitle, setPostTitle] = useState("");
   const [postDesc, setPostDesc] = useState("");
 
   const handlePostTitleChange = (e) => setPostTitle(e.target.value);
   const handlePostDescChange = (e) => setPostDesc(e.target.value);
 
-  const createPost = async (e) => {
+  const dispatch = useDispatch();
+
+  const handleCreatePost = async (e) => {
     e.preventDefault();
 
-    const newPost = {
-      title: postTitle,
-      description: postDesc,
-      liked: false,
-    };
-
-    try {
-      const response = await fetch(POSTS_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newPost),
-      });
-
-      if (response.ok) {
-        const newPostFromServer = await response.json();
-
-        setBlogPosts([...blogPosts, newPostFromServer]);
-      } else throw new Error(response.statusText);
-    } catch (error) {
-      console.log(error);
-    }
-
-    setShowForm(false);
+    dispatch(createPost({ postTitle, postDesc })).finally(() => setShowForm(false));
   };
 
   useEffect(() => {
@@ -48,10 +27,10 @@ export const AddForm = ({ setShowForm, blogPosts, setBlogPosts }) => {
     window.addEventListener("keyup", handleEscapeClick);
 
     return () => window.removeEventListener("keyup", handleEscapeClick);
-  }, []);
+  }, [setShowForm]);
   return (
     <>
-      <form className={s.addForm} onSubmit={createPost}>
+      <form className={s.addForm} onSubmit={handleCreatePost}>
         <button
           type="button"
           className={s.closeFormBtn}

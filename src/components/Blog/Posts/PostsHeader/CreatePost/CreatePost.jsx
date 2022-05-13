@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AddForm } from "./AddForm/AddForm";
 import s from "./CreatePost.module.scss";
 
-export const CreatePost = ({ blogPosts, setBlogPosts }) => {
+export const CreatePost = () => {
   const [showForm, setShowForm] = useState(false);
   return (
     <div>
@@ -12,8 +12,6 @@ export const CreatePost = ({ blogPosts, setBlogPosts }) => {
       {showForm && (
         <AddForm
           setShowForm={setShowForm}
-          blogPosts={blogPosts}
-          setBlogPosts={setBlogPosts}
         />
       )}
     </div>

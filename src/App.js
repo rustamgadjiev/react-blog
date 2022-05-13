@@ -1,5 +1,4 @@
 import "./App.scss";
-import { useState } from "react";
 import { Route } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { Switch } from "react-router-dom";
@@ -8,12 +7,12 @@ import { PublicRouter } from "./components/PublicRouter/PublicRouter";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { Main } from "./pages/Main/Main";
 import { NoMatch } from "./pages/NoMatch/NoMatch";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "./store/slices/auth";
 
 export const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("isLoggedIn") === "true"
-  );
-  
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   return (
     <div className="App">
       <Switch>
@@ -21,20 +20,20 @@ export const App = () => {
           {isLoggedIn ? <Redirect to="/blog" /> : <Redirect to="/login" />}
         </Route>
 
-        <PrivateRouter path="/blog" isLoggedIn={isLoggedIn} exact>
-          <Main setIsLoggedIn={setIsLoggedIn} />
+        <PrivateRouter path="/blog" exact>
+          <Main />
         </PrivateRouter>
 
-        <PrivateRouter path="/favourite" isLoggedIn={isLoggedIn} exact>
-          <Main setIsLoggedIn={setIsLoggedIn} />
+        <PrivateRouter path="/favourite" exact>
+          <Main />
         </PrivateRouter>
 
-        <PrivateRouter path="/blog/:postId" isLoggedIn={isLoggedIn} exact>
-          <Main setIsLoggedIn={setIsLoggedIn} />
+        <PrivateRouter path="/blog/:postId" exact>
+          <Main />
         </PrivateRouter>
 
-        <PublicRouter isLoggedIn={isLoggedIn} path="/login" exact>
-          <LoginPage setIsLoggedIn={setIsLoggedIn} />
+        <PublicRouter path="/login" exact>
+          <LoginPage />
         </PublicRouter>
 
         <Route path="*">

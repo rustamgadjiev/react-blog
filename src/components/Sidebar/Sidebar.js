@@ -3,18 +3,19 @@ import s from "./Sidebar.module.scss";
 import exitButton from "../../assets/images/exit-button.png";
 import { useEffect, useState } from "react";
 import { User } from "./User/User";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../store/slices/auth";
 
-export const Sidebar = ({ userName, setIsLoggedIn }) => {
+export const Sidebar = () => {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+  const dispatch = useDispatch();
+  const userName = localStorage.getItem('userName');
 
   const handleClickToMobileBtn = () => setShowMobileSidebar((show) => !show);
 
   const isActive = showMobileSidebar ? s.active : "";
 
-  const handleExitClick = () => {
-    localStorage.removeItem("isLoggedIn");
-    setIsLoggedIn(false);
-  };
+  const handleExitClick = () => dispatch(logOut());
 
   useEffect(() => {
     const escapeClick = (e) => {

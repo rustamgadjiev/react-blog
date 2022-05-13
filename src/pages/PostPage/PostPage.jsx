@@ -5,7 +5,13 @@ import { ReactComponent as LoadingIcon } from "../../assets/images/icons/loading
 import { ReactComponent as LikeIcon } from "../../assets/images/icons/like.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/images/icons/delete.svg";
 import { ReactComponent as EditIcon } from "../../assets/images/icons/edit.svg";
-import { useDeleteSinglePost, useEditSinglePost, useGetSinglePost, useLikeSinglePost, useSelectSinglePost } from "../../utils/hooks";
+import {
+  useDeleteSinglePost,
+  useEditSinglePost,
+  useGetSinglePost,
+  useLikeSinglePost,
+  useSelectSinglePost,
+} from "../../utils/hooks";
 import { EditForm } from "../../components/Blog/Posts/Post/EditPost/EditForm";
 
 export const PostPage = ({ blogPosts, setBlogPosts }) => {
@@ -18,7 +24,8 @@ export const PostPage = ({ blogPosts, setBlogPosts }) => {
 
   const likePost = useLikeSinglePost(POSTS_URL, setBlogPost);
   const deletePost = useDeleteSinglePost(POSTS_URL, setBlogPost);
-  const { selectPost, selectedPost, showEditForm, setShowEditForm } = useSelectSinglePost(blogPost);
+  const { selectPost, selectedPost, showEditForm, setShowEditForm } =
+    useSelectSinglePost(blogPost);
   // const editPost = useEditSinglePost(POSTS_URL, blogPost, blogPost.title, blogPost.description, setBlogPost, selectedPost);
 
   const { title, description, img } = blogPost;
@@ -54,7 +61,10 @@ export const PostPage = ({ blogPosts, setBlogPosts }) => {
           </button>
         </div>
         <div className={s.delete}>
-          <button onClick={() => deletePost(blogPost.id)} className={s.deleteBtn}>
+          <button
+            onClick={() => deletePost(blogPost.id)}
+            className={s.deleteBtn}
+          >
             <DeleteIcon />
           </button>
         </div>

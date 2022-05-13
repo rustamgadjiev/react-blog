@@ -2,10 +2,6 @@ import blogImg from "../assets/images/icons/blog.svg";
 import favouriteImg from "../assets/images/icons/star.svg";
 import settingsImg from "../assets/images/icons/settings.svg";
 
-export const user = {
-  name: "Jhon",
-};
-
 export const navList = [
   {
     title: "Blog",

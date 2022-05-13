@@ -1,55 +1,66 @@
 import s from "./Posts.module.scss";
-import { POSTS_URL } from "../../../utils/constants";
 import { Post } from "./Post/Post";
 import { PostsHeader } from "./PostsHeader/PostsHeader";
 import { ReactComponent as LoadingIcon } from "../../../assets/images/icons/loading.svg";
 import { EditForm } from "./Post/EditPost/EditForm";
+import { useSelectPost } from "../../../utils/hooks";
+import { useEffect } from "react";
 import {
-  useDeletePost,
-  useLikePost,
-  useSelectPost,
-} from "../../../utils/hooks";
+  deletePost,
+  fetchPosts,
+  likePost,
+  selectPostsData,
+} from "../../../store/slices/posts";
+import { useDispatch, useSelector } from "react-redux";
 
-export const Posts = ({ blogPosts, setBlogPosts, isLoading, title, error }) => {
-  const likePost = useLikePost(POSTS_URL, blogPosts, setBlogPosts);
-  const deletePost = useDeletePost(POSTS_URL, blogPosts, setBlogPosts);
-
+export const Posts = ({ blogPosts, title }) => {
   const { selectPost, selectedPost, showEditForm, setShowEditForm } =
     useSelectPost(blogPosts);
 
-  if (isLoading)
+  const { postsData, error, isLoading } = useSelector(selectPostsData);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, [dispatch]);
+
+  const handleDeletePost = (postId) => dispatch(deletePost(postId));
+  const handleLikePost = (post) => dispatch(likePost(post));
+
+  if (isLoading) {
     return (
       <div className={s.loading}>
         <LoadingIcon />
       </div>
     );
+  }
 
-  if (error)
+  if (error) {
     return (
       <div className={s.error}>
         <span>Мы не получили данные :(</span>
         <div>
-          <button>Повторить</button>
+          <button onClick={() => dispatch(fetchPosts())}>Повторить</button>
         </div>
       </div>
     );
+  }
 
   return (
     <div className={s.posts}>
       <div className="container">
         <PostsHeader
           title={title}
-          blogPosts={blogPosts}
-          setBlogPosts={setBlogPosts}
         />
         <div className={s.content}>
-          {blogPosts.map((post, pos) => {
+          {postsData.map((post, pos) => {
             return (
               <Post
                 key={post.id}
                 {...post}
-                likePost={() => likePost(post)}
-                deletePost={() => deletePost(post.id)}
+                likePost={() => handleLikePost(post)}
+                deletePost={() => handleDeletePost(post.id)}
                 selectPost={() => selectPost(pos)}
               />
             );
@@ -61,8 +72,6 @@ export const Posts = ({ blogPosts, setBlogPosts, isLoading, title, error }) => {
         <EditForm
           selectedPost={selectedPost}
           setShowEditForm={setShowEditForm}
-          blogPosts={blogPosts}
-          setBlogPosts={setBlogPosts}
         />
       )}
     </div>

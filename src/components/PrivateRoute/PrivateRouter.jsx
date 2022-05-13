@@ -1,12 +1,14 @@
+import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Route } from "react-router-dom";
+import { selectIsLoggedIn } from "../../store/slices/auth";
 
 export const PrivateRouter = ({
   path,
   children: Component,
-  isLoggedIn,
   exact = false,
 }) => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
     <Route
       exact={exact}

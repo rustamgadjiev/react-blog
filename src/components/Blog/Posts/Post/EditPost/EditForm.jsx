@@ -1,29 +1,26 @@
 import s from "./EditForm.module.scss";
 import { useEffect, useState } from "react";
 import { ReactComponent as CloseFormIcon } from "../../../../../assets/images/icons/closeForm.svg";
-import { POSTS_URL } from "../../../../../utils/constants";
-import { useEditPost } from "../../../../../utils/hooks";
+import { useDispatch } from "react-redux";
+import { editPost } from "../../../../../store/slices/posts";
 
 export const EditForm = ({
   setShowEditForm,
   selectedPost,
-  setBlogPosts,
-  blogPosts,
 }) => {
   const [postTitle, setPostTitle] = useState(selectedPost?.title);
   const [postDesc, setPostDesc] = useState(selectedPost?.description);
 
   const handlePostTitleChange = (e) => setPostTitle(e.target.value);
   const handlePostDescChange = (e) => setPostDesc(e.target.value);
-  const editPost = useEditPost(
-    POSTS_URL,
-    selectedPost,
-    postTitle,
-    postDesc,
-    blogPosts,
-    setBlogPosts,
-    setShowEditForm
-  );
+
+  const dispatch = useDispatch();
+
+  const handleEditPost = (e) => {
+    e.preventDefault();
+
+    dispatch(editPost({ selectedPost, postTitle, postDesc })).finally(() => setShowEditForm(false));
+  };
 
   useEffect(() => {
     const hideEditForm = (e) => {
@@ -36,7 +33,7 @@ export const EditForm = ({
 
   return (
     <>
-      <form className={s.editForm} onSubmit={editPost}>
+      <form className={s.editForm} onSubmit={handleEditPost}>
         <button
           type="button"
           className={s.closeFormBtn}

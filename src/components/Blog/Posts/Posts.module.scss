@@ -54,19 +54,21 @@
     }
 }
 
-@keyframes load {
-    0%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 1;
-    }
-}
+
 @keyframes loadingAnimation {
     0%{
         transform: rotate(-180deg);
     }
     100%{
         transform: rotate(0);
+    }
+}
+
+@keyframes load {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
     }
 }

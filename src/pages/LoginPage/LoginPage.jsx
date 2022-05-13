@@ -1,7 +1,10 @@
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../store/slices/auth";
 import s from "./LoginPage.module.scss";
 
-export const LoginPage = ({ setIsLoggedIn }) => {
+export const LoginPage = () => {
+  const dispatch = useDispatch();
   const loginRef = useRef();
   const passRef = useRef();
 
@@ -12,11 +15,11 @@ export const LoginPage = ({ setIsLoggedIn }) => {
       login: loginRef.current.value,
       password: passRef.current.value,
     };
-
     console.log(userData);
 
-    localStorage.setItem("isLoggedIn", true);
-    setIsLoggedIn(true);
+    localStorage.setItem('userName', userData.login);
+
+    dispatch(logIn());
   };
   return (
     <form onSubmit={handleSubmit} className={s.form} action="">
