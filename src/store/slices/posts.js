@@ -18,15 +18,11 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
   async (postId) => {
-    const isDelete = window.confirm("Вы хотите удалить пост?");
-
-    if (isDelete) {
       const response = await fetch(POSTS_URL + postId, { method: "DELETE" });
 
       if (response.ok) {
         return await response.json();
       }
-    }
   }
 );
 

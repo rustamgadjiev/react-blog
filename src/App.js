@@ -32,6 +32,14 @@ export const App = () => {
           <Main />
         </PrivateRouter>
 
+        <PrivateRouter path="/account" exact>
+          <Main />
+        </PrivateRouter>
+
+        <PrivateRouter path="/search" exact>
+          <Main />
+        </PrivateRouter>
+
         <PublicRouter path="/login" exact>
           <LoginPage />
         </PublicRouter>

@@ -6,6 +6,11 @@
     justify-content: space-between;
     align-items: center;
     color: #fff;
+    svg{
+        width: 20px;
+        height: 20px;
+        fill: #fff;
+    }
     span{
         @media (max-width: 725px){
             display: none;

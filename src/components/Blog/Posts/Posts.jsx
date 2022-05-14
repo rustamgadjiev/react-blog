@@ -4,20 +4,19 @@ import { PostsHeader } from "./PostsHeader/PostsHeader";
 import { ReactComponent as LoadingIcon } from "../../../assets/images/icons/loading.svg";
 import { EditForm } from "./Post/EditPost/EditForm";
 import { useSelectPost } from "../../../utils/hooks";
+import { Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useEffect } from "react";
 import {
   deletePost,
   fetchPosts,
   likePost,
-  selectPostsData,
 } from "../../../store/slices/posts";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-export const Posts = ({ blogPosts, title }) => {
+export const Posts = ({ title, blogPost, error, isLoading }) => {
   const { selectPost, selectedPost, showEditForm, setShowEditForm } =
-    useSelectPost(blogPosts);
-
-  const { postsData, error, isLoading } = useSelector(selectPostsData);
+    useSelectPost(blogPost);
 
   const dispatch = useDispatch();
 
@@ -25,7 +24,21 @@ export const Posts = ({ blogPosts, title }) => {
     dispatch(fetchPosts());
   }, [dispatch]);
 
-  const handleDeletePost = (postId) => dispatch(deletePost(postId));
+  const { confirm } = Modal;
+
+  const handleDeletePost = (postId) => {
+    confirm({
+      title: 'Вы уверены что хотите удалить пост?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Процесс не возвратим',
+      okText: 'Да',
+      okType: 'danger',
+      cancelText: 'Отмена',
+      onOk() {
+        dispatch(deletePost(postId));
+      }
+    });
+  }
   const handleLikePost = (post) => dispatch(likePost(post));
 
   if (isLoading) {
@@ -54,7 +67,7 @@ export const Posts = ({ blogPosts, title }) => {
           title={title}
         />
         <div className={s.content}>
-          {postsData.map((post, pos) => {
+          {blogPost.map((post, pos) => {
             return (
               <Post
                 key={post.id}

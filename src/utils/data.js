@@ -14,8 +14,8 @@ export const navList = [
     href: "/favourite",
   },
   {
-    title: "Settings",
+    title: "Account",
     img: settingsImg,
-    href: "/settings",
+    href: "/account",
   },
 ];
