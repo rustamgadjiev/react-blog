@@ -1,36 +1,130 @@
-import { useRef } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { logIn } from "../../store/slices/auth";
 import s from "./LoginPage.module.scss";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
-  const loginRef = useRef();
-  const passRef = useRef();
+
+  const [loginValue, setLoginValue] = useState("");
+  const [passValue, setPassValue] = useState("");
+
+  const [isLoginChange, setIsLoginChange] = useState(false);
+  const [isPassChange, setIsPassChange] = useState(false);
+
+  const isPassLength = (password) => {
+    if (password.length >= 8) {
+      return true;
+    }
+    return false;
+  };
+  const isDigitPass = (password) => {
+    for (const i of password) {
+      if (i === " ") continue;
+      if ((+i >= 0 && +i) || +i === 0) {
+        return true;
+      }
+    }
+    return false;
+  };
+  const isUpperCasePass = (password) => {
+    for (const i of password) {
+      if (i === " ") continue;
+      if ((+i >= 0 && +i) || +i === 0) continue;
+      if (i === i.toUpperCase()) {
+        return true;
+      }
+    }
+    return false;
+  };
+  const isLoginLength = (login) => {
+    if (login.length >= 5) {
+      return true;
+    }
+    return false;
+  };
+
+  const validatePassword =
+    isPassLength(passValue) &&
+    isDigitPass(passValue) &&
+    isUpperCasePass(passValue);
+  const validateLogin = isLoginLength(loginValue);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const userData = {
-      login: loginRef.current.value,
-      password: passRef.current.value,
-    };
-    console.log(userData);
+    if (validatePassword && validateLogin) {
+      const userData = {
+        login: loginValue,
+        password: passValue,
+      };
+      console.log(userData);
 
-    if (userData.length >= 8) {
-      localStorage.setItem('userName', userData.login);
+      localStorage.setItem("userName", userData.login);
 
       dispatch(logIn());
     }
   };
+
+  const handleLoginChange = (e) => {
+    setIsLoginChange(true);
+    setLoginValue(e.target.value);
+  };
+  const handlePassChange = (e) => {
+    setIsPassChange(true);
+    setPassValue(e.target.value);
+  }
+
   return (
     <form onSubmit={handleSubmit} className={s.form} action="">
       <div className={s.title}>Вход</div>
       <div>
-        <input ref={loginRef} type="login" placeholder="Логин" required />
+        <input
+          className={`${
+            isLoginChange ? (validateLogin ? s.green__border : s.red__border) : ""
+          }`}
+          type="login"
+          placeholder="Логин"
+          value={loginValue}
+          onChange={handleLoginChange}
+          required
+        />
+      </div>
+      <div className={s.errors}>
+        <ul>
+          {isLoginChange === validateLogin || (
+            <li>Логин должен содержать не менее 5 символов</li>
+          )}
+        </ul>
       </div>
       <div>
-        <input ref={passRef} type="password" placeholder="Пароль" required />
+        <input
+          className={`${
+            isPassChange
+              ? validatePassword
+                ? s.green__border
+                : s.red__border
+              : ""
+          }`}
+          type="password"
+          placeholder="Пароль"
+          value={passValue}
+          onChange={handlePassChange}
+          required
+        />
+      </div>
+      <div className={s.errors}>
+        <ul>
+          {isPassChange === isPassLength(passValue) || (
+            <li>Пароль должен содержать не менее 8 символов</li>
+          )}
+          {isPassChange === isDigitPass(passValue) || (
+            <li>Пароль должен содержать цифру</li>
+          )}
+          {isPassChange === isUpperCasePass(passValue) || (
+            <li>Пароль должен содержать заглавные буквы</li>
+          )}
+        </ul>
       </div>
       <div>
         <button type="submit">Войти</button>
