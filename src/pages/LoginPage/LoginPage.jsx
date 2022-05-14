@@ -17,9 +17,11 @@ export const LoginPage = () => {
     };
     console.log(userData);
 
-    localStorage.setItem('userName', userData.login);
+    if (userData.length >= 8) {
+      localStorage.setItem('userName', userData.login);
 
-    dispatch(logIn());
+      dispatch(logIn());
+    }
   };
   return (
     <form onSubmit={handleSubmit} className={s.form} action="">
