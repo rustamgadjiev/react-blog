@@ -1,6 +1,40 @@
 .account{
     margin-left: 230px;
     padding: 10px;
+    .avatar{
+        img{
+            width: 250px;
+        }
+    }
+    .info{
+        margin-top: 20px;
+        input{
+            background-color: #222;
+            border: 0;
+            outline: none;
+            border-bottom: 1px solid #fff;
+            padding: 5px 7px;
+            color: #fff;
+            &::placeholder{
+                color: rgb(190, 190, 190);
+            }
+            &:focus{
+                background-color: rgb(41, 41, 41);
+            }
+        }
+        div button{
+            border: 0;
+            outline: none;
+            background-color: #333;
+            color: #fff;
+            padding: 5px 7px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+        div + div{
+            margin-top: 10px;
+        }
+    }
     @media (max-width: 725px){
         margin-left: 70px;
     }

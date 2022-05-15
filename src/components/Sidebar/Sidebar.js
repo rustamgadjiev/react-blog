@@ -9,7 +9,6 @@ import { logOut } from "../../store/slices/auth";
 export const Sidebar = () => {
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   const dispatch = useDispatch();
-  const userName = localStorage.getItem('userName');
 
   const handleClickToMobileBtn = () => setShowMobileSidebar((show) => !show);
 
@@ -36,7 +35,7 @@ export const Sidebar = () => {
             <span></span>
           </button>
         </div>
-        <User userName={userName} />
+        <User />
         <Navigation setShowMobileSidebar={setShowMobileSidebar} />
         <div className={s.exit}>
           <button onClick={handleExitClick}>

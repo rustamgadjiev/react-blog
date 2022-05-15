@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { logIn } from "../../store/slices/auth";
+import userAva from "../../assets/images/user-avatar.jpg";
 import s from "./LoginPage.module.scss";
 
 export const LoginPage = () => {
@@ -55,12 +56,12 @@ export const LoginPage = () => {
 
     if (validatePassword && validateLogin) {
       const userData = {
+        avatar: userAva,
         login: loginValue,
         password: passValue,
       };
-      console.log(userData);
 
-      localStorage.setItem("userName", userData.login);
+      localStorage.setItem("userData", JSON.stringify(userData));
 
       dispatch(logIn());
     }
