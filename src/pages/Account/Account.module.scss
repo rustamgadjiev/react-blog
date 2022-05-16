@@ -4,15 +4,21 @@
     .avatar{
         img{
             width: 250px;
+            @media (max-width: 425px) {
+                width: 100%;
+            }
         }
     }
     .info{
         margin-top: 20px;
+        position: relative;
+        display: inline-flex;
+        flex-direction: column;
         input{
             background-color: #222;
             border: 0;
             outline: none;
-            border-bottom: 1px solid #fff;
+            border-bottom: 1px solid;
             padding: 5px 7px;
             color: #fff;
             &::placeholder{
@@ -22,16 +28,25 @@
                 background-color: rgb(41, 41, 41);
             }
         }
-        div button{
+        .item{
+            display: flex;
+        }
+        form button{
             border: 0;
             outline: none;
             background-color: #333;
             color: #fff;
             padding: 5px 7px;
             margin-left: 5px;
+            flex-grow: 1;
             cursor: pointer;
         }
-        div + div{
+        .viewPass{
+            position: absolute;
+            right: -25px;
+            background-color: transparent;
+        }
+        form + form{
             margin-top: 10px;
         }
     }

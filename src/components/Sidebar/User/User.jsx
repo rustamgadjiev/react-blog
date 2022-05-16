@@ -1,8 +1,10 @@
 import s from "./User.module.scss";
 import userBg from "../../../assets/images/user-background.jpg";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../../store/slices/user";
 
 export const User = () => {
-  const { avatar, login } = JSON.parse(localStorage.getItem('userData'));
+  const { avatar, login } = useSelector(selectUserData);
   return (
     <div className={s.user}>
       <img src={userBg} alt="" className={s.fon} />

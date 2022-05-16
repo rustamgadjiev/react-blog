@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { logIn } from "../../store/slices/auth";
 import userAva from "../../assets/images/user-avatar.jpg";
 import s from "./LoginPage.module.scss";
+import { setUserDataToLocale } from "../../store/slices/user";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -58,11 +59,14 @@ export const LoginPage = () => {
       const userData = {
         avatar: userAva,
         login: loginValue,
+        name: null,
+        surName: null,
         password: passValue,
+        email: null,
+        job: null,
       };
 
-      localStorage.setItem("userData", JSON.stringify(userData));
-
+      dispatch(setUserDataToLocale(userData));
       dispatch(logIn());
     }
   };
