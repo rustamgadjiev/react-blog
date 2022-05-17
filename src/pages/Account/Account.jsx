@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editData, selectUserData } from "../../store/slices/user";
+import { ReactComponent as EyeIcon } from '../../assets/images/icons/eye.svg';
 import s from "./Account.module.scss";
 
 export const Account = () => {
@@ -15,6 +16,8 @@ export const Account = () => {
   const [jobValue, setJobValue] = useState(userData.job || "");
   const [passwordType, setPasswordType] = useState("password");
 
+  const [isViewPass, setIsViewPass] = useState(false);
+
   const handleEditData = (e, data) => {
     e.preventDefault();
 
@@ -27,6 +30,8 @@ export const Account = () => {
     } else {
       setPasswordType("password");
     }
+
+    setIsViewPass(!isViewPass);
   };
 
   const handleLoginChange = (e) => setLoginValue(e.target.value);
@@ -96,15 +101,19 @@ export const Account = () => {
           onSubmit={(e) => handleEditData(e, { password: passValue })}
           className={s.item}
         >
-          <input
-            type={passwordType}
-            placeholder="password"
-            value={passValue}
-            onChange={handlePassChange}
-            style={{ borderColor: !!passValue || "red" }}
-            required
-          />
-          <button onClick={handleViewPassword} className={s.viewPass}>[]</button>
+          <label className={s.password}>
+            <input
+              type={passwordType}
+              placeholder="password"
+              value={passValue}
+              onChange={handlePassChange}
+              style={{ borderColor: !!passValue || "red" }}
+              required
+            />
+            <button onClick={handleViewPassword} className={`${s.eye} ${isViewPass ? s.active : ''}`}>
+              <EyeIcon />
+            </button>
+          </label>
           <button type="submit">Изменить пароль</button>
         </form>
         <form

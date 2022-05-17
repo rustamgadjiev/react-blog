@@ -4,6 +4,7 @@ import { logIn } from "../../store/slices/auth";
 import userAva from "../../assets/images/user-avatar.jpg";
 import s from "./LoginPage.module.scss";
 import { setUserDataToLocale } from "../../store/slices/user";
+import { ReactComponent as EyeIcon } from "../../assets/images/icons/eye.svg";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,9 @@ export const LoginPage = () => {
 
   const [isLoginChange, setIsLoginChange] = useState(false);
   const [isPassChange, setIsPassChange] = useState(false);
+
+  const [passwordType, setPasswordType] = useState("password");
+  const [isViewPass, setIsViewPass] = useState(false);
 
   const isPassLength = (password) => {
     if (password.length >= 8) {
@@ -78,7 +82,17 @@ export const LoginPage = () => {
   const handlePassChange = (e) => {
     setIsPassChange(true);
     setPassValue(e.target.value);
-  }
+  };
+
+  const handleViewPassword = () => {
+    if (passwordType !== "text") {
+      setPasswordType("text");
+    } else {
+      setPasswordType("password");
+    }
+
+    setIsViewPass(!isViewPass);
+  };
 
   return (
     <form onSubmit={handleSubmit} className={s.form} action="">
@@ -86,7 +100,11 @@ export const LoginPage = () => {
       <div>
         <input
           className={`${
-            isLoginChange ? (validateLogin ? s.green__border : s.red__border) : ""
+            isLoginChange
+              ? validateLogin
+                ? s.green__border
+                : s.red__border
+              : ""
           }`}
           type="login"
           placeholder="Логин"
@@ -103,20 +121,28 @@ export const LoginPage = () => {
         </ul>
       </div>
       <div>
-        <input
-          className={`${
-            isPassChange
-              ? validatePassword
-                ? s.green__border
-                : s.red__border
-              : ""
-          }`}
-          type="password"
-          placeholder="Пароль"
-          value={passValue}
-          onChange={handlePassChange}
-          required
-        />
+        <label className={s.password}>
+          <input
+            className={`${
+              isPassChange
+                ? validatePassword
+                  ? s.green__border
+                  : s.red__border
+                : ""
+            }`}
+            type={passwordType}
+            placeholder="Пароль"
+            value={passValue}
+            onChange={handlePassChange}
+            required
+          />
+          <button
+            onClick={handleViewPassword}
+            className={`${s.eye} ${isViewPass ? s.active : ""}`}
+          >
+            <EyeIcon />
+          </button>
+        </label>
       </div>
       <div className={s.errors}>
         <ul>

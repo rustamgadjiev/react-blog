@@ -1,37 +1,81 @@
-.account{
+.account {
     margin-left: 230px;
     padding: 10px;
-    .avatar{
-        img{
+
+    .avatar {
+        img {
             width: 250px;
+
             @media (max-width: 425px) {
                 width: 100%;
             }
         }
     }
-    .info{
+
+    .info {
         margin-top: 20px;
         position: relative;
         display: inline-flex;
         flex-direction: column;
-        input{
+
+        .password {
+            position: relative;
+
+            .eye {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 0;
+                background-color: transparent;
+                display: flex;
+                &.active::before{
+                    content: '';
+                    position: absolute;
+                    top: 13px;
+                    left: 4px;
+                    width: 20px;
+                    height: 1px;
+                    background-color: #fff;
+                    transform: rotate(-45deg);
+                }
+
+                @media (max-width: 425px) {
+                    width: auto;
+                    display: inline-block;
+                }
+            }
+        }
+
+        input {
             background-color: #222;
             border: 0;
             outline: none;
             border-bottom: 1px solid;
             padding: 5px 7px;
             color: #fff;
-            &::placeholder{
+
+            &::placeholder {
                 color: rgb(190, 190, 190);
             }
-            &:focus{
+
+            &:focus {
                 background-color: rgb(41, 41, 41);
             }
+
+            @media (max-width: 425px) {
+                width: 100%;
+            }
         }
-        .item{
+
+        .item {
             display: flex;
+
+            @media (max-width: 425px) {
+                display: block;
+            }
         }
-        form button{
+
+        form button {
             border: 0;
             outline: none;
             background-color: #333;
@@ -40,17 +84,20 @@
             margin-left: 5px;
             flex-grow: 1;
             cursor: pointer;
+
+            @media (max-width: 425px) {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 5px;
+            }
         }
-        .viewPass{
-            position: absolute;
-            right: -25px;
-            background-color: transparent;
-        }
-        form + form{
+
+        form+form {
             margin-top: 10px;
         }
     }
-    @media (max-width: 725px){
+
+    @media (max-width: 725px) {
         margin-left: 70px;
     }
 }
