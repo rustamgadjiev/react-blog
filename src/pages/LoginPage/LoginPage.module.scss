@@ -60,7 +60,6 @@
         button {
             border: 0;
             outline: none;
-            background-color: #333;
             color: #fff;
             padding: 5px 7px;
             cursor: pointer;
@@ -68,18 +67,26 @@
 
         .eye {
             position: absolute;
+            border-radius: 0;
+            width: 14px;
+            height: 14px;
             top: 50%;
             transform: translateY(-50%);
             right: 5px;
             background-color: transparent;
             display: inline-block;
             width: auto;
+            svg{
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
             &.active::before{
                 content: '';
                 position: absolute;
-                top: 13px;
-                left: 4px;
-                width: 20px;
+                top: 6px;
+                left: -1px;
+                width: 19px;
                 height: 1px;
                 background-color: #fff;
                 transform: rotate(-45deg);
