@@ -137,6 +137,7 @@ export const LoginPage = () => {
             required
           />
           <button
+            type='button'
             onClick={handleViewPassword}
             className={`${s.eye} ${isViewPass ? s.active : ""}`}
           >

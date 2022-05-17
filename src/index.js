@@ -7,12 +7,16 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import { ConfigProvider } from "antd";
+import ru_RU from 'antd/lib/locale/ru_RU';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <ConfigProvider locale={ru_RU}>
+          <App />
+        </ConfigProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,
