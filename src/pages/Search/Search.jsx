@@ -9,8 +9,8 @@ import {
   likePost,
   selectPostsData,
 } from "../../store/slices/posts";
-import { Modal } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Modal } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Post } from "../../components/Blog/Posts/Post/Post";
 import { useSelectPost } from "../../utils/hooks";
 import { EditForm } from "../../components/Blog/Posts/Post/EditPost/EditForm";
@@ -21,9 +21,21 @@ export const Search = () => {
 
   const { postsData, isLoading, error } = useSelector(selectPostsData);
 
-  const filterPosts = postsData.filter((post) => {
-    return post.title.includes(searchValue) || post.description.includes(searchValue) ;
-  });
+  const [filterPosts, setFilterPosts] = useState(postsData);
+
+  useEffect(() => {
+    const searchTimeout = setTimeout(() => {
+      const filterList = postsData.filter((post) => {
+        return (
+          post.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+          post.description.toLowerCase().includes(searchValue.toLowerCase())
+        );
+      });
+      setFilterPosts(filterList);
+    }, 300);
+    
+    return () => clearTimeout(searchTimeout);
+  }, [postsData, searchValue]);
 
   const { selectPost, selectedPost, showEditForm, setShowEditForm } =
     useSelectPost(filterPosts);
@@ -38,17 +50,17 @@ export const Search = () => {
 
   const handleDeletePost = (postId) => {
     confirm({
-      title: 'Вы уверены что хотите удалить пост?',
+      title: "Вы уверены что хотите удалить пост?",
       icon: <ExclamationCircleOutlined />,
-      content: 'Процесс не возвратим',
-      okText: 'Да',
-      okType: 'danger',
-      cancelText: 'Отмена',
+      content: "Процесс не возвратим",
+      okText: "Да",
+      okType: "danger",
+      cancelText: "Отмена",
       onOk() {
         dispatch(deletePost(postId));
-      }
+      },
     });
-  }
+  };
   const handleLikePost = (post) => dispatch(likePost(post));
 
   if (isLoading) {
@@ -95,7 +107,7 @@ export const Search = () => {
           );
         })}
       </div>
-      
+
       {showEditForm && (
         <EditForm
           selectedPost={selectedPost}
