@@ -6,7 +6,6 @@ import { selectPostsData } from "../../store/slices/posts";
 import { Account } from "../Account/Account";
 import { Favourite } from "../Favourite/Favourite";
 import { PostPage } from "../PostPage/PostPage";
-import { Search } from "../Search/Search";
 
 export const Main = () => {
   const getPostsData = useSelector(selectPostsData);
@@ -21,10 +20,6 @@ export const Main = () => {
 
       <Route exact path="/account">
         <Account />
-      </Route>
-
-      <Route exact path='/search'>
-        <Search />
       </Route>
 
       <Route exact path="/favourite" component={Favourite} />

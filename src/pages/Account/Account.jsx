@@ -92,7 +92,7 @@ export const Account = () => {
             required
           />
           {userData.surName ? (
-            <button type="submit">Изменить фамилиюл</button>
+            <button type="submit">Изменить фамилию</button>
           ) : (
             <button type="submit">Сохранить фамилию</button>
           )}

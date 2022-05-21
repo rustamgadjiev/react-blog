@@ -6,14 +6,33 @@
     justify-content: space-between;
     align-items: center;
     color: #fff;
-    svg{
-        width: 20px;
-        height: 20px;
-        fill: #fff;
-    }
     span{
         @media (max-width: 725px){
             display: none;
+        }
+    }
+    label{
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        gap: 5px;
+        position: relative;
+        max-width: 200px;
+        width: 100%;
+        .searchBtn{
+            border: 0;
+            outline: none;
+            background-color: transparent;
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        svg{
+            width: 17px;
+            height: 17px;
+            fill: #fff;
         }
     }
 }
